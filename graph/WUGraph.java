@@ -14,12 +14,15 @@ public class WUGraph {
    *
    * Running time:  O(1).
    */
-  public WUGraph();
+  public WUGraph() {
+    
+  }
 
   /**
    * vertexCount() returns the number of vertices in the graph.
    *
    * Running time:  O(1).
+   * @return the number of verticies in this graph.
    */
   public int vertexCount();
 
