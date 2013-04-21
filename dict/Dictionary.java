@@ -50,4 +50,13 @@ public abstract class Dictionary {
    *  @return the corresponding value object.
    **/
   public abstract Object find(Object key);
+
+  /**
+   *  remove() removes the entry with the given key from this
+   *  dictionary. If the given key is not in the dictionary,
+   *  nothing happens.
+   *
+   *  @param key the key of the entry to remove.
+   **/
+  public abstract void remove(Object key);
 }
