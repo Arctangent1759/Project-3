@@ -61,7 +61,7 @@ Here are some of the design elements that will help achieve these goals.
      objects.  The best way to do this is to use the hash table you implemented
      for Homework 6--modified so it resizes itself to keep the load factor
      constant as |V| changes.  (You may NOT use Java's built-in hash tables.)
-     The hash table also makes it possible to support isVertex() in O(1) time.
+	 The hash table also makes it possible to support isVertex() in O(1) time.
 
      In Java, every object has a hashCode() method.  The default hashCode()
      is defined in the Object class, and hashes the _reference_ to the Object.

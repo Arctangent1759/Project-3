@@ -10,10 +10,10 @@ import set.*;
 
 public class Kruskal {
 
-  /**
-   * minSpanTree() returns a WUGraph that represents the minimum spanning tree
-   * of the WUGraph g.  The original WUGraph g is NOT changed.
-   */
-  public static WUGraph minSpanTree(WUGraph g);
+	/**
+	 * minSpanTree() returns a WUGraph that represents the minimum spanning tree
+	 * of the WUGraph g.	The original WUGraph g is NOT changed.
+	 */
+	public static WUGraph minSpanTree(WUGraph g);
 
 }
