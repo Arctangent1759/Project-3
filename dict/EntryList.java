@@ -18,8 +18,8 @@ class EntryList extends DList<Entry> {
    **/
   Object find(Object key) {
     for(Entry e:this) {
-      if (e.key.equals(key)) {
-        return e.value;
+      if ((e.getKey()).equals(key)) {
+        return e.getValue();
       }
     }
     return null;
