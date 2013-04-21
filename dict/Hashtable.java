@@ -105,27 +105,10 @@ public class Hashtable extends Dictionary{
     int maxSearch = 320 + val;
   }
 
-  public int getCollisions() {
-  }
-
-  public float getLoadFactor() {
-  }
-
-
   private static int first_prime_over(int n){
     int out;
     for(out = n; !isPrime(out);out++){}
     return out;
-  }
-  /**
-   *  isPrime() indicates if a number is prime.
-   *
-   *  @param val the number in question.
-   *  @return whether the given number is prime or not.
-   **/
-<<<<<<< HEAD
-  private static boolean isPrime(int val) {
-    
   }
 
   /**
@@ -148,9 +131,15 @@ public class Hashtable extends Dictionary{
    **/
   public float getLoadFactor() {
     return (float) size()/this.table.length;
-=======
+  }
 
-  private static boolean isPrime(int n){
+  /**
+   *  isPrime() indicates if a number is prime.
+   *
+   *  @param val the number in question.
+   *  @return whether the given number is prime or not.
+   **/
+  private static boolean isPrime(int n) {
     if ((n%2)==0){
       return false;
     }
@@ -160,6 +149,5 @@ public class Hashtable extends Dictionary{
       }
     }
     return true;
->>>>>>> 35c6e08d427bb47c3bd7336de791c9fdd026bcb7
   }
 }
