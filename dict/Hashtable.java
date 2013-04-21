@@ -25,7 +25,7 @@ public class Hashtable extends Dictionary{
    *  @param sizeEstimate size estimated for this hashtable.
    **/
   public Hashtable(int sizeEstimate) {
-    int size = nextPrime(sizeEstimate);
+    int size = firstPrimeOver(sizeEstimate);
     this.table = new EntryList[size];
     this.collisions = 0;
   }
@@ -92,20 +92,19 @@ public class Hashtable extends Dictionary{
   }
 
   /**
-   *  nextPrime() gives the next prime number greater than or equal 
+   *  firstPrimeOver() gives the next prime number greater than or equal 
    *  to the input number.
-   *  ex: nextPrime(20) == 23
-   *      nextPrime(31) == 31
+   *  ex: firstPrimeOver(20) == 23
+   *      firstPrimeOver(31) == 31
+   *  For the numbers in the positive integer range (0,2,147,483,647]
+   *  the largest gap between any two prime numbers is 320. This means
+   *  that the worst-case running time is O(319 * sqrt(n)) where n is
+   *  the inputed number.
    *
    *  @param val the value for to look for the next sequential prime.
    *  @return the next prime number at or after the given input.
    **/
-  private static int nextPrime(int val) {
-    //320 is the largest gap between prime numbers in the range of int32
-    int maxSearch = 320 + val;
-  }
-
-  private static int first_prime_over(int n){
+  private static int firstPrimeOver(int n){
     int out;
     for(out = n; !isPrime(out);out++){}
     return out;
