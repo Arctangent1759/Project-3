@@ -6,15 +6,18 @@ import java.util.ListIterator;
 import Constants.Constants;
 public class DListIterator<T> implements ListIterator<T>{
   DListNode<T> curr;
+  DList<T> list;
   int index;
-  protected DListIterator(DListNode<T> sentinel){
-    this.curr=sentinel;
+  protected DListIterator(DList<T> list){
+    this.curr=list.sentinel;
+    this.list=list;
     this.index=-1;
   }
   public void add(T t){
     this.curr.next.prev=new DListNode<T>(t,this.curr,this.curr.next);
     this.curr.next=this.curr.next.prev;
     curr=curr.next;
+    list.size++;
     index++;
   }
   public void set(T t){
@@ -30,6 +33,7 @@ public class DListIterator<T> implements ListIterator<T>{
     this.curr.next.prev=this.curr.prev;
     this.curr.prev.next=this.curr.next;
     this.curr=this.curr.prev;
+    list.size--;
     index--;
   }
   public int previousIndex(){

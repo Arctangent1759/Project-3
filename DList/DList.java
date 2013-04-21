@@ -1,8 +1,10 @@
 /**
  *
  * An enhanced version of the homework version of DListNode, with generics.
- * Can act like a DList using pushFront, pushBack, popFront, popBack, getFront, and getBack.
+ * Can act like a DEQUE using pushFront, pushBack, popFront, popBack, getFront, and getBack.
  * Can act like a Stack using push and pop.
+ * Can act like a Queue using enqueue and dequeue.
+ * Can act like a standard DList/SList using the ListIterator interface.
  *
 **/
 
@@ -27,7 +29,7 @@ public class DList<T> implements Iterable<T>{
   }
 
   public Iterator<T> iterator(){
-    return new DListIterator<T>(sentinel);
+    return new DListIterator<T>(this);
   }
   
   /**
@@ -96,6 +98,13 @@ public class DList<T> implements Iterable<T>{
   **/
   public T pop(){
     return this.popBack();
+  }
+
+  public void enqueue(T item){
+    this.pushFront(item);
+  }
+  public T dequeue(){
+    return this.popFront();
   }
 
   /**
