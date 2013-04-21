@@ -14,7 +14,7 @@ public class Hashtable extends Dictionary{
    *
    *  table the array that contains DList chains for hashed entries.
    **/
-  private DList table[];
+  private EntryList table[];
   private int collisions;
 
   /**
@@ -25,7 +25,7 @@ public class Hashtable extends Dictionary{
    **/
   public Hashtable(int sizeEstimate) {
     int size = nextPrime(sizeEstimate);
-    this.table = new DList[size];
+    this.table = new EntryList[size];
     this.collisions = 0;
   }
 
@@ -37,11 +37,16 @@ public class Hashtable extends Dictionary{
   }
 
   /**
+   *  find() returns the corresponding value for a given key.
+   *  If the given key is not in the dictionary, return null.
    *
+   *  @param key the key to lookup in this hashtable.
+   *  @return the corresponding value to the given key.
    **/
   @Override
   public Object find(Object key) {
-    
+    int index = compress(key.hashCode());
+    return (table[index] == null) ? null : table[index].find(key);
   }
 
   /**
@@ -49,11 +54,24 @@ public class Hashtable extends Dictionary{
    **/
   @Override
   public void insert(Object key, Object value) {
-    
+    Entry e = new Entry(key,value);
+    int index = compress(key.hashCode());
+    if (this.table[index] == null) { //if bucket is empty-make new EntryList
+      this.table[index] = new EntryList;
+      this.table[index].push(e);
+    } else { //otherwise-a collision has occurred
+      this.table[index].push(e);
+      this.collisions++;
+    }
   }
 
   /**
+   *  compress() compresses inputs in the integer range (Integer.MIN_VALUE
+   *  to Integer.MAX_VALUE) to the range of array indicies of the size of
+   *  this hashtable's table array.
    *
+   *  @param code the hash code to compress.
+   *  @return the array index where the given code compresses to.
    **/
   private int compress(int code) {
     int bigPrime = 16908799;
@@ -89,9 +107,25 @@ public class Hashtable extends Dictionary{
     
   }
 
+  /**
+   *  getCollisions() returns the number of collisions this hashtable has.
+   *  A collision is when a bucket of this table contains more than one entry.
+   *
+   *  @return the number of collisions in this hashtable.
+   **/
   public int getCollisions() {
+    return this.collisions;
   }
 
+  /**
+   *  getLoadFactor() returns the load factor of this hashtable.
+   *  The load factor for a hashtable is defined as:
+   *  the number of (entries / size of this table)
+   *  A good load factor to acheive is 1.
+   *
+   *  @return the load factor of this hashtable.
+   **/
   public float getLoadFactor() {
+    return (float) size()/this.table.length;
   }
 }
