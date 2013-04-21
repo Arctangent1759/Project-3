@@ -79,19 +79,34 @@ public class Hashtable extends Dictionary{
     int maxSearch = 320 + val;
   }
 
+  public int getCollisions() {
+  }
+
+  public float getLoadFactor() {
+  }
+
+
+  private static int first_prime_over(int n){
+    int out;
+    for(out = n; !isPrime(out);out++){}
+    return out;
+  }
   /**
    *  isPrime() indicates if a number is prime.
    *
    *  @param val the number in question.
    *  @return whether the given number is prime or not.
    **/
-  private static boolean isPrime(int val) {
-    
-  }
 
-  public int getCollisions() {
-  }
-
-  public float getLoadFactor() {
+  private static boolean isPrime(int n){
+    if ((n%2)==0){
+      return false;
+    }
+    for (int i = 3; i < Math.sqrt(n); i+=2){
+      if (n%i==0){
+        return false;
+      }
+    }
+    return true;
   }
 }
