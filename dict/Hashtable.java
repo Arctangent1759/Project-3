@@ -12,7 +12,8 @@ public class Hashtable extends Dictionary{
   /**
    *  Member Variables.
    *
-   *  table the array that contains DList chains for hashed entries.
+   *  table the array that contains EntryList chains for hashed entries.
+   *  collisions the number of collisions this hashtable has.
    **/
   private EntryList table[];
   private int collisions;
@@ -40,6 +41,9 @@ public class Hashtable extends Dictionary{
    *  find() returns the corresponding value for a given key.
    *  If the given key is not in the dictionary, return null.
    *
+   *  Running time: O(1) --if the load factor is low.
+   *                O(n) --if the load factor is high. 
+   *                       where n is the number of entries.
    *  @param key the key to lookup in this hashtable.
    *  @return the corresponding value to the given key.
    **/
@@ -50,14 +54,18 @@ public class Hashtable extends Dictionary{
   }
 
   /**
+   *  insert() inserts a key-value pair into this hashtable.
+   *  The key will be hashed and compressed and fit into a chain in this table.
    *
+   *  @param key the key to be stored in this hashtable.
+   *  @param value the value that corresponds to the given key.
    **/
   @Override
   public void insert(Object key, Object value) {
     Entry e = new Entry(key,value);
     int index = compress(key.hashCode());
     if (this.table[index] == null) { //if bucket is empty-make new EntryList
-      this.table[index] = new EntryList;
+      this.table[index] = new EntryList();
       this.table[index].push(e);
     } else { //otherwise-a collision has occurred
       this.table[index].push(e);
