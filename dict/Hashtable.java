@@ -64,13 +64,13 @@ public class Hashtable extends Dictionary{
   public void insert(Object key, Object value) {
     Entry e = new Entry(key,value);
     int index = compress(key.hashCode());
+
     if (this.table[index] == null) { //if bucket is empty-make new EntryList
       this.table[index] = new EntryList();
-      this.table[index].push(e);
     } else { //otherwise-a collision has occurred
-      this.table[index].push(e);
       this.collisions++;
     }
+    this.table[index].push(e);
   }
 
   /**
