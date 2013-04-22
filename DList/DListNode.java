@@ -5,13 +5,14 @@ package DList;
  *  Now with generics!
  *
 **/
-
+import Constants.Constants;
 
 public class DListNode<T>{
   protected DListNode<T> prev;
   protected DListNode<T> next;
   protected T item;
-  protected boolean isSentinel;
+  protected boolean isInvalid;
+  protected DList<T> myList;
 
   /**
    *
@@ -19,17 +20,21 @@ public class DListNode<T>{
    *  @param obj the object to be stored in this node
    *  @param prev the previous node
    *  @param next the next node
-   *  @param isSentinel whether this node is the sentinel
+   *  @param isInvalid whether this node is the sentinel
    *
   **/
-  public DListNode(T obj, DListNode<T> prev, DListNode<T> next, boolean isSentinel){
+  public DListNode(T obj, DListNode<T> prev, DListNode<T> next, DList<T> myList, boolean isInvalid){
     this.prev=prev;
     this.next=next;
     this.item=obj;
-    this.isSentinel=isSentinel;
+    this.myList=myList;
+    this.isInvalid=isInvalid;
   }
-  public DListNode(T obj, DListNode<T> prev, DListNode<T> next){
-    this(obj, prev, next, false);
+  public DListNode(T obj, DListNode<T> prev, DListNode<T> next, DList<T> myList){
+    this(obj, prev, next, myList, false);
+  }
+  public boolean isInvalid(){
+    return isInvalid;
   }
 
   /**
@@ -39,6 +44,9 @@ public class DListNode<T>{
    *
   **/
   public T item(){
+    if (this.isInvalid){
+      throw new RuntimeException("item() called on Sentinel or invalid node.");
+    }
     return item;
   }
 
@@ -49,7 +57,7 @@ public class DListNode<T>{
    *
   **/
   public DListNode<T> prev(){
-    if (prev.isSentinel){
+    if (prev.isInvalid){
       return null;
     }
     return prev;
@@ -62,9 +70,20 @@ public class DListNode<T>{
    *
   **/
   public DListNode<T> next(){
-    if (next.isSentinel){
+    if (next.isInvalid){
       return null;
     }
     return next;
+  }
+
+  public T remove(){
+    if (this.isInvalid){
+      throw new RuntimeException("remove() called on Sentinel or invalid node.");
+    }
+    this.myList.size--;
+    this.next.prev=this.prev;
+    this.prev.next=this.next;
+    this.isInvalid=true;
+    return item;
   }
 }
