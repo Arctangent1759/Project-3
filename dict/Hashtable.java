@@ -12,9 +12,10 @@ public class Hashtable extends Dictionary{
   /**
    *  Member Variables.
    *
-   *  table the array that contains DList chains for hashed entries.
+   *  table the array that contains EntryList chains for hashed entries.
+   *  collisions the number of collisions this hashtable has.
    **/
-  private DList table[];
+  private EntryList table[];
   private int collisions;
 
   /**
@@ -24,8 +25,8 @@ public class Hashtable extends Dictionary{
    *  @param sizeEstimate size estimated for this hashtable.
    **/
   public Hashtable(int sizeEstimate) {
-    int size = nextPrime(sizeEstimate);
-    this.table = new DList[size];
+    int size = firstPrimeOver(sizeEstimate);
+    this.table = new EntryList[size];
     this.collisions = 0;
   }
 
@@ -37,23 +38,48 @@ public class Hashtable extends Dictionary{
   }
 
   /**
+   *  find() returns the corresponding value for a given key.
+   *  If the given key is not in the dictionary, return null.
    *
+   *  Running time: O(1) --if the load factor is low.
+   *                O(n) --if the load factor is high. 
+   *                       where n is the number of entries.
+   *  @param key the key to lookup in this hashtable.
+   *  @return the corresponding value to the given key.
    **/
   @Override
   public Object find(Object key) {
-    
+    int index = compress(key.hashCode());
+    return (table[index] == null) ? null : table[index].find(key);
   }
 
   /**
+   *  insert() inserts a key-value pair into this hashtable.
+   *  The key will be hashed and compressed and fit into a chain in this table.
    *
+   *  @param key the key to be stored in this hashtable.
+   *  @param value the value that corresponds to the given key.
    **/
   @Override
   public void insert(Object key, Object value) {
-    
+    Entry e = new Entry(key,value);
+    int index = compress(key.hashCode());
+
+    if (this.table[index] == null) { //if bucket is empty-make new EntryList
+      this.table[index] = new EntryList();
+    } else { //otherwise-a collision has occurred
+      this.collisions++;
+    }
+    this.table[index].push(e);
   }
 
   /**
+   *  compress() compresses inputs in the integer range (Integer.MIN_VALUE
+   *  to Integer.MAX_VALUE) to the range of array indicies of the size of
+   *  this hashtable's table array.
    *
+   *  @param code the hash code to compress.
+   *  @return the array index where the given code compresses to.
    **/
   private int compress(int code) {
     int bigPrime = 16908799;
@@ -66,39 +92,53 @@ public class Hashtable extends Dictionary{
   }
 
   /**
-   *  nextPrime() gives the next prime number greater than or equal 
+   *  firstPrimeOver() gives the next prime number greater than or equal 
    *  to the input number.
-   *  ex: nextPrime(20) == 23
-   *      nextPrime(31) == 31
+   *  ex: firstPrimeOver(20) == 23
+   *      firstPrimeOver(31) == 31
+   *  For the numbers in the positive integer range (0,2,147,483,647]
+   *  the largest gap between any two prime numbers is 320. This means
+   *  that the worst-case running time is O(319 * sqrt(n)) where n is
+   *  the inputed number.
    *
    *  @param val the value for to look for the next sequential prime.
    *  @return the next prime number at or after the given input.
    **/
-  private static int nextPrime(int val) {
-    //320 is the largest gap between prime numbers in the range of int32
-    int maxSearch = 320 + val;
-  }
-
-  public int getCollisions() {
-  }
-
-  public float getLoadFactor() {
-  }
-
-
-  private static int first_prime_over(int n){
+  private static int firstPrimeOver(int n){
     int out;
     for(out = n; !isPrime(out);out++){}
     return out;
   }
+
+  /**
+   *  getCollisions() returns the number of collisions this hashtable has.
+   *  A collision is when a bucket of this table contains more than one entry.
+   *
+   *  @return the number of collisions in this hashtable.
+   **/
+  public int getCollisions() {
+    return this.collisions;
+  }
+
+  /**
+   *  getLoadFactor() returns the load factor of this hashtable.
+   *  The load factor for a hashtable is defined as:
+   *  the number of (entries / size of this table)
+   *  A good load factor to acheive is 1.
+   *
+   *  @return the load factor of this hashtable.
+   **/
+  public float getLoadFactor() {
+    return (float) size()/this.table.length;
+  }
+
   /**
    *  isPrime() indicates if a number is prime.
    *
    *  @param val the number in question.
    *  @return whether the given number is prime or not.
    **/
-
-  private static boolean isPrime(int n){
+  private static boolean isPrime(int n) {
     if ((n%2)==0){
       return false;
     }
