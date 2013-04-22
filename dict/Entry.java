@@ -43,4 +43,15 @@ class Entry {
   Object getValue() {
     return this.value;
   }
+
+  /**
+   *  toString() gives the string representation of this entry.
+   *  It follows the guidelines specified in the Java API.
+   *
+   *  @return the string representation of the entry.
+   **/
+  @Override
+  public String toString() {
+    return key.toString() + ": " + value.toString();
+  }
 }
