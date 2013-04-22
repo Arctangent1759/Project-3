@@ -13,8 +13,8 @@ import java.util.Iterator;
 
 public class DList<T> implements Iterable<T>{
 
-  DListNode<T> sentinel;
-  int size;
+  protected DListNode<T> sentinel;
+  protected int size;
 
   /**
    *
@@ -22,7 +22,7 @@ public class DList<T> implements Iterable<T>{
    *
    */
   public DList(){
-    this.sentinel = new DListNode<T>(null,null,null,true);
+    this.sentinel = new DListNode<T>(null,null,null,this,true);
     this.sentinel.prev=this.sentinel;
     this.sentinel.next=this.sentinel;
     this.size=0;
@@ -45,7 +45,7 @@ public class DList<T> implements Iterable<T>{
    *  @param T is item being pushed to the front.
   **/ 
   public void pushFront(T item){
-    this.sentinel.next = new DListNode<T>(item, this.sentinel, this.sentinel.next,false);
+    this.sentinel.next = new DListNode<T>(item, this.sentinel, this.sentinel.next,this,false);
     this.sentinel.next.next.prev = this.sentinel.next;
     this.size++;
   }
@@ -55,7 +55,7 @@ public class DList<T> implements Iterable<T>{
    *  @param T is item being pushed to the back.
   **/
   public void pushBack(T item){
-    this.sentinel.prev = new DListNode<T>(item, this.sentinel.prev, this.sentinel,false);
+    this.sentinel.prev = new DListNode<T>(item, this.sentinel.prev, this.sentinel,this,false);
     this.sentinel.prev.prev.next = this.sentinel.prev;
     this.size++;
   }
@@ -112,7 +112,7 @@ public class DList<T> implements Iterable<T>{
    *  @return DListNode in the front.
   **/
   public DListNode<T> getFront(){
-    if (this.sentinel.next.isSentinel){
+    if (this.sentinel.next.isInvalid){
       return null;
     }
     return this.sentinel.next;
@@ -123,7 +123,7 @@ public class DList<T> implements Iterable<T>{
    *  @return DListNode in the back.
   **/
   public DListNode<T> getBack(){
-    if (this.sentinel.prev.isSentinel){
+    if (this.sentinel.prev.isInvalid){
       return null;
     }
     return this.sentinel.prev;
@@ -208,10 +208,23 @@ public class DList<T> implements Iterable<T>{
   public String toString(){
     DListNode<T> curr = sentinel.next;
     String out="[";
-    while (!(curr.isSentinel)){
+    while (!(curr.isInvalid)){
       out+=" "+curr.item().toString()+" ";
       curr=curr.next;
     }
     return out+"]";
+  }
+
+  public DListNode<T> front(){
+    if (size==0){
+      return null;
+    }
+    return sentinel.next();
+  }
+  public DListNode<T> back(){
+    if (size==0){
+      return null;
+    }
+    return sentinel.prev();
   }
 }

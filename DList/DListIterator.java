@@ -14,20 +14,20 @@ public class DListIterator<T> implements ListIterator<T>{
     this.index=-1;
   }
   public void add(T t){
-    this.curr.next.prev=new DListNode<T>(t,this.curr,this.curr.next);
+    this.curr.next.prev=new DListNode<T>(t,this.curr,this.curr.next,list);
     this.curr.next=this.curr.next.prev;
     curr=curr.next;
     list.size++;
     index++;
   }
   public void set(T t){
-    if (this.curr.isSentinel){
+    if (this.curr.isInvalid){
       throw new IllegalStateException("DListIterator.set called before DListIterator.next or DListIterator.prev");
     }
     this.curr.item=t;
   }
   public void remove(){
-    if (this.curr.isSentinel){
+    if (this.curr.isInvalid){
       throw new IllegalStateException("DListIterator.remove called before DListIterator.next or DListIterator.prev");
     }
     this.curr.next.prev=this.curr.prev;
@@ -37,7 +37,7 @@ public class DListIterator<T> implements ListIterator<T>{
     index--;
   }
   public int previousIndex(){
-    if (curr.isSentinel){
+    if (curr.isInvalid){
       return -1;
     }
     return index;
@@ -46,7 +46,7 @@ public class DListIterator<T> implements ListIterator<T>{
     return index+1;
   }
   public T previous(){
-    if (curr.isSentinel){
+    if (curr.isInvalid){
       return null;
     }
     index--;
@@ -54,7 +54,7 @@ public class DListIterator<T> implements ListIterator<T>{
     return curr.next.item;
   }
   public T next(){
-    if (curr.next.isSentinel){
+    if (curr.next.isInvalid){
       return null;
     }
     index++;
@@ -62,9 +62,9 @@ public class DListIterator<T> implements ListIterator<T>{
     return curr.item;
   }
   public boolean hasPrevious(){
-    return !curr.isSentinel;
+    return !curr.isInvalid;
   }
   public boolean hasNext(){
-    return !curr.next.isSentinel;
+    return !curr.next.isInvalid;
   }
 }
