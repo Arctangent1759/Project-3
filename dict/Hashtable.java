@@ -57,6 +57,8 @@ public class Hashtable extends Dictionary{
   /**
    *  insert() inserts a key-value pair into this hashtable.
    *  The key will be hashed and compressed and fit into a chain in this table.
+   *  If the give key is already present within this hashtable, it will be 
+   *  removed then replaced. This means that no duplicates are allowed.
    *
    *  @param key the key to be stored in this hashtable.
    *  @param value the value that corresponds to the given key.
@@ -71,10 +73,11 @@ public class Hashtable extends Dictionary{
     } else { //otherwise-a collision has occurred
       this.collisions++;
     }
+    this.table[index].remove(key); //remove any duplicates
     this.table[index].push(e);
     this.size++;
 
-    if(getLoadFactor() > Constants.MAX_LOAD) {
+    if (getLoadFactor() > Constants.MAX_LOAD) {
       Constants.print("resized");
       expand(2);
     }
@@ -237,51 +240,5 @@ public class Hashtable extends Dictionary{
       r++;
     }
     return result;
-  }
-
-  public static void main(String argv[]) {
-    Hashtable h = new Hashtable(); //default constructor
-
-    //insert
-    for(int i=1;i<=1024;i=i<<1) {
-      h.insert(i,i<<3);
-    }
-    System.out.println(h);
-    //find
-    for(int i=1;i<=1024;i=i<<1) {
-      System.out.println("find "+i+": "+h.find(i));
-    }
-    //Collisions
-    System.out.println("collisions:"+h.getCollisions());
-    //remove
-    for(int i=1;i<1024;i=i<<1) {
-      System.out.println("remove() "+i);
-      h.remove(i);
-    }
-    System.out.println(h);
-    //invalid finds
-    System.out.println("find(13) should be null: "+h.find(13));
-    System.out.println("find(14) should be null: "+h.find(14));
-    System.out.println("find(15) should be null: "+h.find(15));
-    //invalid removes
-    h.remove(100);
-    h.remove(101);
-    h.remove(102);
-    System.out.println(h);
-    //new table
-    h = new Hashtable(1000);
-    for(int i=0;i<1000;i++) {
-      h.insert(Math.random(),i);
-    }
-    //Collisions
-    System.out.println("new table, 1k entries: collisions:"+h.getCollisions());
-    System.out.println("loadFactor: "+h.getLoadFactor());
-    //System.out.println(h);
-    //try to overload hashtable
-    for(int i=0;i<1500;i++) {
-      h.insert(Math.random(),i);
-    }
-    System.out.println("MAXLOAD:"+Constants.MAX_LOAD);
-    System.out.println("loadFactor: "+h.getLoadFactor());
   }
 }
