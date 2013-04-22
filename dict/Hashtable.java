@@ -1,4 +1,6 @@
 package dict;
+
+import Constants.Constants;
 /**
  *  Hashtable extends the Dictionary abstract class.
  *  It implements hashing and chaining. What this means 
@@ -71,6 +73,11 @@ public class Hashtable extends Dictionary{
       this.collisions++;
     }
     this.table[index].push(e);
+    this.size++;
+
+    if(getLoadFactor() > Constants.MAX_LOAD) {
+      expand(2);
+    }
   }
 
   /**
@@ -82,7 +89,22 @@ public class Hashtable extends Dictionary{
    **/
   @Override
   public void remove(Object key) {
-    
+    int index = compress(key.hashCode());
+    if (this.table[index] != null) {
+      //if this bucket has more than one entry, decrement number of collisions
+      if(this.table[index].length() > 1) {
+        this.collisions--;
+      }
+      this.table[index].remove(key);
+      //if the chain's sizes goes to zero-save space by making it null
+      if(this.table[index].length() == 0) {
+        this.table[index] = null;
+      }
+    }
+
+    if(getLoadFactor() < Constants.MIN_LOAD) {
+      shrink(2);
+    }
   }
 
   /**
@@ -104,34 +126,38 @@ public class Hashtable extends Dictionary{
   }
 
   /**
-   *  shrink() reduces the size of this hashtable by a given factor.
-   *  All items that are currently in this hashtable will be rehashed
-   *  into the new hashtable.
-   *
-   *  @param shrinkFactor the factor by which to reduce the size of this table.
-   **/
-  private void shrink(int shrinkFactor) {
-    shrinkFactor = this.table.length / shrinkFactor;
-
-    EntryList newTable[] = new EntryList[shrinkFactor]; //new hashtable
-    for(EntryList l:this.table) {
-      if (l != null) {
-        for(Entry e:l) { //for each entry in each list
-          //copy each entry over
-        }
-      }
-    }
-  }
-
-  /**
    *  expand() increases the size of this hashtable by a given factor.
    *  All items that are currently in this hashtable will be rehashed
-   *  into the new hashtable.
+   *  into the new hashtable. 
+   *  ex: table size=100 ; expand(2.5) ; new table size = 250
    *
    *  @param expandFactor the factor by which to reduce the size of this table.
    **/
-  private void expand(int expandFactor) {
-    
+  private void expand(float expandFactor) {
+    Hashtable newTable = new Hashtable((int)(this.table.length * expandFactor));
+    for(EntryList l:this.table) {
+      if (l != null) {
+        for(Entry e:l) { //for each entry in each list
+          //rehash each entry
+          newTable.insert(e.getKey(),e.getValue());
+        }
+      }
+    }
+    //this table now owns the table field of the new table
+    this.table = newTable.table;
+    this.collisions = newTable.collisions;
+  }
+
+  /**
+   *  shrink() reduces the size of this hashtable by a given factor.
+   *  All items that are currently in this hashtable will be rehashed
+   *  into the new hashtable.
+   *  ex: table size=100 ; shrink(2) ; new table size = 50
+   *
+   *  @param shrinkFactor the factor by which to reduce the size of this table.
+   **/
+  private void shrink(float shrinkFactor) {
+    expand(1/shrinkFactor);
   }
 
   /**
@@ -193,6 +219,25 @@ public class Hashtable extends Dictionary{
     return true;
   }
 
+  /**
+   *  toString() gives the string representation of this hashtable.
+   *  It follows the standards in the Java API.
+   *
+   *  @return the string representation of this hashtable.
+   **/
+  @Override
+  public String toString() {
+    String result = "";
+    int r = 0;
+    for(EntryList l:this.table) {
+      if (l != null) {
+        result = result +"\n"+r+": "+l.toString();
+      }
+      r++;
+    }
+    return result;
+  }
+
   public static void main(String argv[]) {
     Hashtable h = new Hashtable(); //default constructor
 
@@ -200,15 +245,36 @@ public class Hashtable extends Dictionary{
     for(int i=1;i<=1024;i=i<<1) {
       h.insert(i,i<<3);
     }
+    System.out.println(h);
     //find
     for(int i=1;i<=1024;i=i<<1) {
       System.out.println("find "+i+": "+h.find(i));
     }
+    //Collisions
+    System.out.println("collisions:"+h.getCollisions());
+    //remove
+    for(int i=1;i<1024;i=i<<1) {
+      System.out.println("remove() "+i);
+      h.remove(i);
+    }
+    System.out.println(h);
     //invalid finds
     System.out.println("find(13) should be null: "+h.find(13));
     System.out.println("find(14) should be null: "+h.find(14));
     System.out.println("find(15) should be null: "+h.find(15));
-    //
-
+    //invalid removes
+    h.remove(100);
+    h.remove(101);
+    h.remove(102);
+    System.out.println(h);
+    //new table
+    h = new Hashtable(1000);
+    for(int i=0;i<1000;i++) {
+      h.insert(Math.random(),i);
+    }
+    //Collisions
+    System.out.println("new table, 1k entries: collisions:"+h.getCollisions());
+    System.out.println("loadFactor: "+h.getLoadFactor());
+    //System.out.println(h);
   }
 }
