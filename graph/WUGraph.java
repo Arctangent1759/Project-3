@@ -143,8 +143,32 @@ public class WUGraph {
    * Running time:  O(d), where d is the degree of "vertex".
    */
   public Neighbors getNeighbors(Object vertex){
-    return null;
-    //TODO: Implement
+    Neighbors neighbors = new Neighbors();
+    if(vertexTable.find(vertex) == null){
+      return null;
+    }
+    Vertex target = (Vertex) vertexTable.find(vertex);
+    EdgeList edges = target.edges;
+    if(edges.length() == 0){
+      return null;
+    }
+    neighbors.neighborList = new Object[edges.length()];
+    neighbors.weightList = new int[edges.length()];
+    int index = 0;
+    for(Edge e : edges){
+      Vertex endpt1 = e.v1;
+      Vertex endpt2 = e.v2;
+      if(endpt1 == endpt2){
+        neighbors.neighborList[index] = endpt1.item;
+      }else if(endpt1 == target){
+        neighbors.neighborList[index] = endpt2.item;  
+      }else{
+        neighbors.neighborList[index] = endpt1.item;
+      }
+      neighbors.weightList[index] = e.weight;
+      index++;
+    }
+    return neighbors;
   }
 
   /**
@@ -156,7 +180,32 @@ public class WUGraph {
    *
    * Running time:  O(1).
    */
-  public void addEdge(Object u, Object v, int weight){}
+  public void addEdge(Object u, Object v, int weight){
+    if(vertexTable.find(u) == null || vertexTable.find(v) == null){
+      return;
+    }
+    Vertex endpt1 = (Vertex) vertexTable.find(u); //pointless watermelon ()
+    Vertex endpt2 = (Vertex) vertexTable.find(v);
+
+    VertexPair key = new VertexPair(u,v);
+    Edge newEdge = new Edge(endpt1,endpt2,weight,null);
+    Edge newEdgeClone = new Edge(endpt1,endpt2,weight,null);
+
+    newEdge.partner = newEdgeClone; //pointless comment
+    newEdgeClone.partner = newEdge;
+
+
+  
+    //insert into edgeLists
+    endpt1.edges.push(newEdge); 
+    newEdge.container = endpt1.edges.front();
+    if(endpt1 != endpt2){
+      endpt2.edges.push(newEdgeClone);
+      newEdgeClone.container = endpt2.edges.front();
+    }
+
+    edgeTable.insert(key,newEdge.container); //insert into $$$cashtable$$$
+  }
 
   /**
    * removeEdge() removes an edge (u, v) from the graph.  If either of the
@@ -167,7 +216,15 @@ public class WUGraph {
    * Running time:  O(1).
    */
   public void removeEdge(Object u, Object v){
-    //TODO: Implement
+    VertexPair key = new VertexPair(u,v);
+    if(edgeTable.find(key) == null){
+      return;
+    }
+    DListNode<Edge> node = (DListNode<Edge>) edgeTable.find(key);
+    node.item().partner.container.remove();
+    node.remove();
+    edgeTable.remove(new VertexPair(u,v));
+    
   }
 
   /**
@@ -178,8 +235,7 @@ public class WUGraph {
    * Running time:  O(1).
    */
   public boolean isEdge(Object u, Object v){
-    return false;
-    //TODO: Implement
+    return edgeTable.find(new VertexPair(u,v) != null;
   }
 
   /**
@@ -197,8 +253,7 @@ public class WUGraph {
    * Running time:  O(1).
    */
   public int weight(Object u, Object v){
-    return 0;
-    //TODO: Implement
+    return (edgeTable.find(new VertexPair(u,v)) != null ? ((DListNode<Edge>) edgeTable.find(new VertexPair(u,v))).item().weight : 0 ) ;
   }
 
 }
