@@ -57,6 +57,8 @@ public class Hashtable extends Dictionary{
   /**
    *  insert() inserts a key-value pair into this hashtable.
    *  The key will be hashed and compressed and fit into a chain in this table.
+   *  If the give key is already present within this hashtable, it will be 
+   *  removed then replaced. This means that no duplicates are allowed.
    *
    *  @param key the key to be stored in this hashtable.
    *  @param value the value that corresponds to the given key.
@@ -71,10 +73,11 @@ public class Hashtable extends Dictionary{
     } else { //otherwise-a collision has occurred
       this.collisions++;
     }
+    this.table[index].remove(key); //remove any duplicates
     this.table[index].push(e);
     this.size++;
 
-    if(getLoadFactor() > Constants.MAX_LOAD) {
+    if (getLoadFactor() > Constants.MAX_LOAD) {
       Constants.print("resized");
       expand(2);
     }
