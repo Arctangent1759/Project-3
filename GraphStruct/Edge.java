@@ -1,3 +1,4 @@
+package GraphStruct;
 import graph.Vertex;
 import graph.VertexPair;
 
