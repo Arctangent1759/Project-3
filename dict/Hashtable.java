@@ -74,6 +74,18 @@ public class Hashtable extends Dictionary{
   }
 
   /**
+   *  remove() finds an entry in this hashtable given a key.
+   *  The entry is then removed. If the given key is not in
+   *  this hashtable, nothing happens.
+   *
+   *  @param key the key of the entry to be removed.
+   **/
+  @Override
+  public void remove(Object key) {
+    
+  }
+
+  /**
    *  compress() compresses inputs in the integer range (Integer.MIN_VALUE
    *  to Integer.MAX_VALUE) to the range of array indicies of the size of
    *  this hashtable's table array.
@@ -89,6 +101,37 @@ public class Hashtable extends Dictionary{
     } else {
       return (code % this.table.length + this.table.length) % this.table.length;
     }
+  }
+
+  /**
+   *  shrink() reduces the size of this hashtable by a given factor.
+   *  All items that are currently in this hashtable will be rehashed
+   *  into the new hashtable.
+   *
+   *  @param shrinkFactor the factor by which to reduce the size of this table.
+   **/
+  private void shrink(int shrinkFactor) {
+    shrinkFactor = this.table.length / shrinkFactor;
+
+    EntryList newTable[] = new EntryList[shrinkFactor]; //new hashtable
+    for(EntryList l:this.table) {
+      if (l != null) {
+        for(Entry e:l) { //for each entry in each list
+          //copy each entry over
+        }
+      }
+    }
+  }
+
+  /**
+   *  expand() increases the size of this hashtable by a given factor.
+   *  All items that are currently in this hashtable will be rehashed
+   *  into the new hashtable.
+   *
+   *  @param expandFactor the factor by which to reduce the size of this table.
+   **/
+  private void expand(int expandFactor) {
+    
   }
 
   /**
@@ -148,5 +191,24 @@ public class Hashtable extends Dictionary{
       }
     }
     return true;
+  }
+
+  public static void main(String argv[]) {
+    Hashtable h = new Hashtable(); //default constructor
+
+    //insert
+    for(int i=1;i<=1024;i=i<<1) {
+      h.insert(i,i<<3);
+    }
+    //find
+    for(int i=1;i<=1024;i=i<<1) {
+      System.out.println("find "+i+": "+h.find(i));
+    }
+    //invalid finds
+    System.out.println("find(13) should be null: "+h.find(13));
+    System.out.println("find(14) should be null: "+h.find(14));
+    System.out.println("find(15) should be null: "+h.find(15));
+    //
+
   }
 }
