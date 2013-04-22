@@ -1,24 +1,12 @@
 package graph;
-import DList.DList;
+import DList.*;
+import GraphStruct.*;
+
 public class Vertex{
-  DList<Edge> chain;
+  EdgeList edges;
   Object item;
   public Vertex(Object item){
-    this.item=item;
-    chain=new DList<Edge>();
-  }
-  public void insert(Vertex e, double weight){
-    chain.push(new Edge(e,weight));
-  }
-}
-class Edge{
-  double weight;
-  Vertex target;
-  public Edge(Vertex v, double w){
-    this.target=v;
-    this.weight=w;
-  }
-  public Edge(Vertex v){
-    this(v,0);
+    this.item = item;
+    edges = new EdgeList();
   }
 }
