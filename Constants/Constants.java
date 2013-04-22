@@ -10,7 +10,7 @@ public final class Constants{
    **/
 	public static final boolean DEBUG=true;
   public static final float MAX_LOAD = 2.0f;
-  public static final float MIN_LOAD = 2.0f;
+  public static final float MIN_LOAD = 0.5f;
 
 	/**
 	 *

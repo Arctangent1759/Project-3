@@ -1,6 +1,6 @@
 package dict;
 
-import Constants.Constants;
+import Constants.*;
 /**
  *  Hashtable extends the Dictionary abstract class.
  *  It implements hashing and chaining. What this means 
@@ -76,6 +76,7 @@ public class Hashtable extends Dictionary{
     this.size++;
 
     if(getLoadFactor() > Constants.MAX_LOAD) {
+      Constants.print("resized");
       expand(2);
     }
   }
@@ -144,6 +145,7 @@ public class Hashtable extends Dictionary{
       }
     }
     //this table now owns the table field of the new table
+    this.size = newTable.size;
     this.table = newTable.table;
     this.collisions = newTable.collisions;
   }
@@ -276,5 +278,11 @@ public class Hashtable extends Dictionary{
     System.out.println("new table, 1k entries: collisions:"+h.getCollisions());
     System.out.println("loadFactor: "+h.getLoadFactor());
     //System.out.println(h);
+    //try to overload hashtable
+    for(int i=0;i<1500;i++) {
+      h.insert(Math.random(),i);
+    }
+    System.out.println("MAXLOAD:"+Constants.MAX_LOAD);
+    System.out.println("loadFactor: "+h.getLoadFactor());
   }
 }
