@@ -1,5 +1,5 @@
-package GraphStruct.EdgeList;
-import DList.Dlist;
+package GraphStruct;
+import DList.DList;
 
 public class EdgeList extends DList<Edge>{
    
