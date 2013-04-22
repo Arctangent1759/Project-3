@@ -9,20 +9,13 @@ import DList.DList;
  */
 
 public class WUGraph {
-  protected DList<Vertex> adjacencyLists;
-  int vertices;
-  int edges;
-
   /**
    * WUGraph() constructs a graph having no vertices or edges.
    *
    * Running time:  O(1).
    */
   public WUGraph(){
-    adjacencyLists = new DList<Vertex>();
-    //TODO: Initialize the HashTable
-    vertices=0;
-    edges=0;
+    //TODO: implement
   }
 
   /**
@@ -31,7 +24,8 @@ public class WUGraph {
    * Running time:  O(1).
    */
   public int vertexCount(){
-    return vertices;
+    //TODO: implement
+    return 0;
   }
 
   /**
@@ -40,7 +34,8 @@ public class WUGraph {
    * Running time:  O(1).
    */
   public int edgeCount(){
-    return edges;
+    //TODO: implement
+    return 0;
   }
 
   /**
@@ -68,8 +63,7 @@ public class WUGraph {
    * Running time:  O(1).
    */
   public void addVertex(Object vertex){
-    adjacencyLists.push(new Vertex(vertex));
-    //TODO: Update HashTable
+    //TODO: Implement
   }
 
   /**
