@@ -235,7 +235,7 @@ public class WUGraph {
    * Running time:  O(1).
    */
   public boolean isEdge(Object u, Object v){
-    return edgeTable.find(new VertexPair(u,v) != null;
+    return edgeTable.find(new VertexPair(u,v)) != null;
   }
 
   /**
