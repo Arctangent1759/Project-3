@@ -1,7 +1,10 @@
 /* WUGraph.java */
 
 package graph;
-import DList.DList;
+
+import dict.Hashtable;
+import Constants.Constants;
+import DList.*;
 
 /**
  * The WUGraph class represents a weighted, undirected graph.  Self-edges are
@@ -9,13 +12,23 @@ import DList.DList;
  */
 
 public class WUGraph {
+  Hashtable vertexTable;
+  VertexList adjacencyList;
+  Hashtable edgeTable;
+
+  int numEdges;
+
+
+
   /**
    * WUGraph() constructs a graph having no vertices or edges.
    *
    * Running time:  O(1).
    */
   public WUGraph(){
-    //TODO: implement
+    vertexTable = new Hashtable(Constants.HASH_INIT_SIZE);
+    edgeTable = new Hashtable(Constants.HASH_INIT_SIZE);
+    adjacencyList = new VertexList();
   }
 
   /**
@@ -24,8 +37,7 @@ public class WUGraph {
    * Running time:  O(1).
    */
   public int vertexCount(){
-    //TODO: implement
-    return 0;
+    return adjacencyList.length();
   }
 
   /**
@@ -34,8 +46,7 @@ public class WUGraph {
    * Running time:  O(1).
    */
   public int edgeCount(){
-    //TODO: implement
-    return 0;
+    return numEdges;
   }
 
   /**
@@ -51,8 +62,13 @@ public class WUGraph {
    * Running time:  O(|V|).
    */
   public Object[] getVertices(){
-    return null;
-    //TODO: Implement
+    Object[] out = new Object[vertexCount()];
+    int currIndex=0;
+    for (Vertex i : adjacencyList){
+      out[currIndex]=i.item;
+      currIndex++;
+    }
+    return out;
   }
 
   /**
@@ -63,7 +79,8 @@ public class WUGraph {
    * Running time:  O(1).
    */
   public void addVertex(Object vertex){
-    //TODO: Implement
+    adjacencyList.push(new Vertex(vertex));
+    vertexTable.insert(vertex,adjacencyList.front());
   }
 
   /**
@@ -74,7 +91,16 @@ public class WUGraph {
    * Running time:  O(d), where d is the degree of "vertex".
    */
   public void removeVertex(Object vertex){
-    //TODO: Implement
+    //Find zee vertex
+    DListNode<Vertex> dead_node = (DListNode<Vertex>) vertexTable.find(vertex);
+    DListNode<Edge> curr = dead_node.item().edges.front();
+    while (curr!=null){
+      curr.item().partner.container.remove();
+      curr.remove();
+      curr=curr.next();
+    }
+    dead_node.remove();
+    vertexTable.remove(vertex);
   }
 
   /**
@@ -84,8 +110,7 @@ public class WUGraph {
    * Running time:  O(1).
    */
   public boolean isVertex(Object vertex){
-    return false;
-    //TODO: Implement
+    return (vertexTable.find(vertex)!=null);
   }
 
   /**
@@ -96,8 +121,7 @@ public class WUGraph {
    * Running time:  O(1).
    */
   public int degree(Object vertex){
-    return 0;
-    //TODO: Implement
+    return isVertex(vertex) ? ((Vertex)vertexTable.find(vertex)).edges.length() : 0;
   }
 
   /**
