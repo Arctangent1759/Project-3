@@ -1,6 +1,5 @@
 package graph;
 import DList.*;
-import GraphStruct.*;
 
 public class Vertex{
   EdgeList edges;
