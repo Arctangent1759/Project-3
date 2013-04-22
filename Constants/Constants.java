@@ -1,7 +1,16 @@
 package Constants;
 public final class Constants{
 
+  /**
+   *  Member Variables.
+   *
+   *  DEBUG boolean that indicates whether to print debug statements.
+   *  MAX_LOAD float that indicates the maximum load factor for hashtables.
+   *  MIN_LOAD float that indicates the minimum load factor for hashtables.
+   **/
 	public static final boolean DEBUG=true;
+  public static final float MAX_LOAD = 2.0f;
+  public static final float MIN_LOAD = 2.0f;
 
 	/**
 	 *
