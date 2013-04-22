@@ -1,6 +1,6 @@
 package dict;
-
 import Constants.*;
+
 /**
  *  Hashtable extends the Dictionary abstract class.
  *  It implements hashing and chaining. What this means 
@@ -8,7 +8,6 @@ import Constants.*;
  *  same array index, they will be stored in a list at that
  *  index.
  **/
-
 public class Hashtable extends Dictionary{
 
   /**
