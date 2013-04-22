@@ -10,6 +10,7 @@ public final class Constants{
    *  DEBUG boolean that indicates whether to print debug statements.
    *  MAX_LOAD float that indicates the maximum load factor for hashtables.
    *  MIN_LOAD float that indicates the minimum load factor for hashtables.
+   *  HASH_INIT_SIZE integer that defines the default hash table constructor size.
    **/
   public static final boolean DEBUG=true;
   public static final float MAX_LOAD = 2.0f;
