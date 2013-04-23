@@ -4,6 +4,7 @@ import DList.*;
 public class Edge{
     public Vertex v1;
     public Vertex v2;
+    int weight;
     Edge partner; 
     DListNode<Edge> container;
  
@@ -14,10 +15,11 @@ public class Edge{
     * @param v2 the second vertex incident to the edge
     * @param container the node containing this edge
    **/
-    public Edge(Vertex v1, Vertex v2, DListNode<Edge> container){
+    public Edge(Vertex v1, Vertex v2, int weight, DListNode<Edge> container){
       this.v1 = v1;
       this.v2 = v2;
       this.container = container;
+      this.weight = weight;
       this.partner = null;
     }
 
