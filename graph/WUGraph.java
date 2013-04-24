@@ -121,7 +121,7 @@ public class WUGraph {
    * Running time:  O(1).
    */
   public int degree(Object vertex){
-    return isVertex(vertex) ? ((Vertex)vertexTable.find(vertex)).edges.length() : 0;
+    return isVertex(vertex) ? ((DListNode<Vertex>)vertexTable.find(vertex)).item().edges.length() : 0;
   }
 
   /**
@@ -147,7 +147,7 @@ public class WUGraph {
     if(vertexTable.find(vertex) == null){
       return null;
     }
-    Vertex target = (Vertex) vertexTable.find(vertex);
+    Vertex target = ((DListNode<Vertex>) vertexTable.find(vertex)).item();
     EdgeList edges = target.edges;
     if(edges.length() == 0){
       return null;
@@ -184,8 +184,9 @@ public class WUGraph {
     if(vertexTable.find(u) == null || vertexTable.find(v) == null){
       return;
     }
-    Vertex endpt1 = (Vertex) vertexTable.find(u); //pointless watermelon ()
-    Vertex endpt2 = (Vertex) vertexTable.find(v);
+    this.numEdges++;
+    Vertex endpt1 = ((DListNode<Vertex>) vertexTable.find(u)).item(); //pointless watermelon (fan zombie)
+    Vertex endpt2 = ((DListNode<Vertex>) vertexTable.find(v)).item();
 
     VertexPair key = new VertexPair(u,v);
     Edge newEdge = new Edge(endpt1,endpt2,weight,null);

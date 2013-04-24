@@ -78,7 +78,7 @@ public class DList<T> implements Iterable<T>{
    *  @param item the generic item being pushed to the back.
    **/
   public void push(T item){
-    this.pushBack(item);
+    this.pushFront(item);
   }
 
   /**
@@ -114,7 +114,7 @@ public class DList<T> implements Iterable<T>{
    *  @return the generic item that is on the back of this list.
    **/
   public T pop(){
-    return this.popBack();
+    return this.popFront();
   }
 
   /**
@@ -134,7 +134,7 @@ public class DList<T> implements Iterable<T>{
    *  @return the generic item that is on the front of this list.
    **/
   public T dequeue(){
-    return this.popFront();
+    return this.popBack();
   }
 
   /**

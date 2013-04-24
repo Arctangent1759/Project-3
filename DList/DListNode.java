@@ -33,6 +33,12 @@ public class DListNode<T>{
   public DListNode(T obj, DListNode<T> prev, DListNode<T> next, DList<T> myList){
     this(obj, prev, next, myList, false);
   }
+
+  public DListNode(T obj){
+    this(obj, null, null, null, true);
+  }
+
+
   public boolean isInvalid(){
     return isInvalid;
   }
@@ -85,5 +91,30 @@ public class DListNode<T>{
     this.prev.next=this.next;
     this.isInvalid=true;
     return item;
+  }
+
+  public void insertAfter(DListNode<T> n){
+    if (this.isInvalid){
+      throw new RuntimeException("insertAfter() called on Sentinel or invalid node.");
+    }
+    myList.size++;
+    n.prev=this;
+    n.next=this.next;
+    this.next.prev=n;
+    this.next=n;
+    n.isInvalid=false;
+    n.myList=this.myList;
+  }
+  public void insertBefore(DListNode<T> n){
+    if (this.isInvalid){
+      throw new RuntimeException("insertBefore() called on Sentinel or invalid node.");
+    }
+    myList.size++;
+    n.next=this;
+    n.prev=this.prev;
+    this.prev.next=n;
+    this.prev=n;
+    n.isInvalid=false;
+    n.myList=this.myList;
   }
 }
