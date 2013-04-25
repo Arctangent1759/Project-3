@@ -49,7 +49,7 @@ public class Edge implements Comparable {
      *  @return the numerical representation of the ordering of this and o.
      **/
     public int compareTo(Object o) {
-        if(o !instanceof Edge) {
+        if(!(o instanceof Edge)) {
             return -255;
         } else if (this.weight == ((Edge)o).weight) {
             return 0;
