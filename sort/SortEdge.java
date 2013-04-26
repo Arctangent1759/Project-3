@@ -1,6 +1,12 @@
 package sort;
+import Constants.Constants;
 
 public class SortEdge {
+  public static void sort(Comparable a[]){
+    quicksort(a);
+  }
+
+
   /**
    *  quicksort()[1 param] is a driver for quicksort()[3 param].
    *  See quicksort()[3 param].
@@ -8,7 +14,7 @@ public class SortEdge {
    *  @param a array of comparable items to be sorted.
    **/
   public static void quicksort(Comparable a[]) {
-    quicksort(a,0,a.length);
+    quicksort(a,0,a.length-1);
   }
 
   /**
@@ -28,11 +34,12 @@ public class SortEdge {
       a[pivotIndex] = a[high]; //Swap pivot with last item
       a[high] = pivot;
 
+
       int i = low - 1;
       int j = high;
       do {
         do { i++; } while (a[i].compareTo(pivot) < 0);
-        do { j++; } while (a[j].compareTo(pivot) < 0 && (j > low));
+        do { j--; } while (a[j].compareTo(pivot) > 0 && (j > low));
         if (i < j) {
           swap = a[i];
           a[i] = a[j];
@@ -60,6 +67,24 @@ public class SortEdge {
   private static int randomPivot(int lowerBound, int upperBound) {
     return (int)(Math.random() * (upperBound+1 - lowerBound))+ lowerBound;
   }
+
+  private static String arrStr(Comparable[] a){
+    String out = "[";
+    for (Comparable i: a){
+      out+=" "+i.toString()+" ";
+    }
+    return out+"]";
+  }
+
+  private static String arrStr(Comparable[] a,int l,int h){
+    String out = "[";
+    for (int i = l; i<=h; i++){
+      out+=" "+a[i].toString()+" ";
+    }
+    return out+"]";
+  }
+
+
 
   /**
    *  radixSort() sorts an array of comparable items from least to

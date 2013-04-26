@@ -5,6 +5,7 @@ import set.*;
 import dict.*;
 import DList.*;
 import Constants.*;
+import sort.*;
 
 /**
  * The Kruskal class contains the method minSpanTree(), which implements
@@ -22,24 +23,21 @@ public class Kruskal {
     for (Object o:g.getVertices()){
       out.addVertex(o);
     }
-    //DList<EdgeWrapper> edges = getEdges(g.getVertices()[0],g,new Hashtable(g.vertexCount()),new DList<EdgeWrapper>());
-    //TODO: implement implementation
+    //Get all the edges of g
+    EdgeWrapper[] edges = getEdges(g);
+    SortEdge.quicksort(edges);
+    //Map the vertices of g to a DisjointSets object
+    Object[] vertices = out.getVertices();
+    DisjointSets sets=new DisjointSets(vertices.length);
+    for (EdgeWrapper edge:edges){
+    }
+
+    for(EdgeWrapper edge: edges){
+      Constants.print("V1: " + edge.v1 + " V2: " + edge.v2 + " weight: " + edge.weight);
+    }
     return null;
   }
  
-  /*
-  private static DList<EdgeWrapper> getEdges(Object curr, WUGraph g, Hashtable visited, DList<EdgeWrapper> out){
-    //TODO: This is wrong.
-    visited.insert(curr,"Alan Turing Lives.");
-    Object[] neighbors=g.getNeighbors(curr).neighborList;
-    for (int i = 0; i < neighbors.length; i++){
-      if (visited.find(neighbors[i])==null){
-        out.push(new EdgeWrapper(curr,neighbors[i],g.weight(curr,neighbors[i])));
-      }
-    }
-    return out;
-  }
-  */
 
   private static EdgeWrapper[] getEdges(WUGraph g){
     Object[] vertices = g.getVertices();  // list of vertices
@@ -67,22 +65,18 @@ public class Kruskal {
     w.addVertex(2);
     w.addVertex(3);
     w.addVertex(4);
+    w.addEdge(4,3,4);
+    w.addEdge(1,4,3);
+    w.addEdge(1,3,2);
     w.addEdge(1,2,1);
-    w.addEdge(1,3,1);
-    w.addEdge(1,4,1);
-    w.addEdge(4,3,1);
 
-    EdgeWrapper[] edges = Kruskal.getEdges(w);
-    for(EdgeWrapper edge: edges){
-      Constants.print("V1: " + edge.v1 + " V2: " + edge.v2 + " weight: " + edge.weight);
-    }
+    minSpanTree(w);
   }
-  
 }
 
-class EdgeWrapper{
-  Object v1;
-  Object v2;
+class EdgeWrapper implements Comparable{
+  public Object v1;
+  public Object v2;
   int weight;
   public EdgeWrapper(Object v1, Object v2, int weight){
     this.v1=v1;
@@ -112,6 +106,11 @@ class EdgeWrapper{
       return false;
     }   
   }
+  
+  public int compareTo(Object c){
+    if (((EdgeWrapper) c).weight==this.weight){
+      return 0;
+    }
+    return (((EdgeWrapper) c).weight>this.weight)?-1:1;
+  }
 }
-
-
