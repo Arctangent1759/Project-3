@@ -41,7 +41,7 @@ public class DisjointSets {
    *  @param root2 the root of the other set.
    **/
   public void union(int root1, int root2) {
-    if (array[root1]>0 || array[root2]>0 || array[root1]==array[root2]){
+    if (array[root1]>0 || array[root2]>0 || root1==root2){
       throw new RuntimeException("Union called on non-roots or identical roots");
     }
     if (array[root2] < array[root1]) {                 // root2 has larger tree

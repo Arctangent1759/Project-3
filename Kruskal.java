@@ -18,24 +18,33 @@ public class Kruskal {
    * of the WUGraph g.  The original WUGraph g is NOT changed.
    */
   public static WUGraph minSpanTree(WUGraph g) {
+    //Create a hashtable to map vertices to integers in the DisjointSets object
+    Hashtable vertexToInt = new Hashtable(g.vertexCount());
+
     //Create a graph with the same vertices as g.
     WUGraph out = new WUGraph();
-    for (Object o:g.getVertices()){
-      out.addVertex(o);
-    }
-    //Get all the edges of g
-    EdgeWrapper[] edges = getEdges(g);
-    SortEdge.quicksort(edges);
-    //Map the vertices of g to a DisjointSets object
-    Object[] vertices = out.getVertices();
-    DisjointSets sets=new DisjointSets(vertices.length);
-    for (EdgeWrapper edge:edges){
+    Object[] vertices = g.getVertices();
+    for (int i = 0; i < vertices.length; i++){
+      out.addVertex(vertices[i]);
+      vertexToInt.insert(vertices[i],i);
     }
 
-    for(EdgeWrapper edge: edges){
-      Constants.print("V1: " + edge.v1 + " V2: " + edge.v2 + " weight: " + edge.weight);
+    //Get and sort all the edges of g
+    EdgeWrapper[] edges = getEdges(g);
+    SortEdge.sort(edges);
+
+    //Map the vertices of g to a DisjointSets object
+    DisjointSets sets=new DisjointSets(vertices.length);
+    for (EdgeWrapper edge:edges){
+      int root1=sets.find((int)vertexToInt.find(edge.v1));
+      int root2=sets.find((int)vertexToInt.find(edge.v2));
+      if (root1!=root2){
+        out.addEdge(edge.v1,edge.v2,edge.weight);
+        sets.union(root1,root2);
+      }
     }
-    return null;
+
+    return out;
   }
  
 
@@ -77,7 +86,7 @@ public class Kruskal {
 class EdgeWrapper implements Comparable{
   public Object v1;
   public Object v2;
-  int weight;
+  public int weight;
   public EdgeWrapper(Object v1, Object v2, int weight){
     this.v1=v1;
     this.v2=v2;
