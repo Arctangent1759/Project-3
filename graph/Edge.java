@@ -14,7 +14,7 @@ public class Edge implements Comparable {
     * @param v1 the first vertex incident to the edge  
     * @param v2 the second vertex incident to the edge
     * @param container the node containing this edge
-   **/
+    **/
     public Edge(Vertex v1, Vertex v2, int weight, DListNode<Edge> container){
       this.v1 = v1;
       this.v2 = v2;
@@ -23,13 +23,29 @@ public class Edge implements Comparable {
       this.partner = null;
     }
 
+    /**
+     * Sets a partner for this edge
+     *
+     * @param partner the edge to be partnered with this one
+     **/
     public void setPartner(Edge partner){
       this.partner = partner;
     }
 
+    /**
+     * Gets this edges partner
+     *
+     * @return this edges partner    
+     **/
     public Edge getPartner(){
       return partner;
     }
+
+    /**
+     * Gets the vertices incident to this edge
+     *
+     * @return a VertexPair of this edge's surrounding vertices
+     **/
 
     public VertexPair vertices(){
       return new VertexPair(v1,v2);
