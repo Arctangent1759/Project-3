@@ -36,8 +36,8 @@ public class Kruskal {
     //Map the vertices of g to a DisjointSets object
     DisjointSets sets=new DisjointSets(vertices.length);
     for (EdgeWrapper edge:edges){
-      int root1=sets.find((int)vertexToInt.find(edge.v1));
-      int root2=sets.find((int)vertexToInt.find(edge.v2));
+      int root1=sets.find((Integer)(vertexToInt.find(edge.v1)));
+      int root2=sets.find((Integer)(vertexToInt.find(edge.v2)));
       if (root1!=root2){
         out.addEdge(edge.v1,edge.v2,edge.weight);
         sets.union(root1,root2);
@@ -159,7 +159,7 @@ class EdgeWrapper implements Comparable{
    *  @param c the object to be compared to.
    *  @return an integer representation of the given objects' ordering.
    **/
-  @Ovveride
+  @Override
   public int compareTo(Object c){
     if (((EdgeWrapper) c).weight==this.weight){
       return 0;
