@@ -11,12 +11,12 @@ import sort.*;
  * The Kruskal class contains the method minSpanTree(), which implements
  * Kruskal's algorithm for computing a minimum spanning tree of a graph.
  */
-
 public class Kruskal {
+
   /**
-   * minSpanTree() returns a WUGraph that represents the minimum spanning tree
-   * of the WUGraph g.  The original WUGraph g is NOT changed.
-   */
+   *  minSpanTree() returns a WUGraph that represents the minimum spanning tree
+   *  of the WUGraph g.  The original WUGraph g is NOT changed.
+   **/
   public static WUGraph minSpanTree(WUGraph g) {
     //Create a hashtable to map vertices to integers in the DisjointSets object
     Hashtable vertexToInt = new Hashtable(g.vertexCount());
@@ -47,7 +47,12 @@ public class Kruskal {
     return out;
   }
  
-
+  /**
+   *  getEdges() gets an array of the edges from a given WUGraph.
+   *
+   *  @param g the WUGraph from which to extract the edges.
+   *  @return an EdgeWrapper array containing all the edges from g.
+   **/
   private static EdgeWrapper[] getEdges(WUGraph g){
     Object[] vertices = g.getVertices();  // list of vertices
     Hashtable visited = new Hashtable();  // list of visited edges
@@ -83,15 +88,42 @@ public class Kruskal {
   }
 }
 
+/**
+ *  The EdgeWrapper class does TODO: fill this out
+ **/
 class EdgeWrapper implements Comparable{
+
+  /**
+   *  Member Variables. TODO: fill this out
+   *
+   *  v1
+   *  v2
+   *  weight
+   **/
   public Object v1;
   public Object v2;
   public int weight;
+
+  /**
+   *  EdgeWrapper constructor creates a new edge wrapper object.
+   *  
+   *  @param v1
+   *  @param v2
+   *  @param weight
+   **/
   public EdgeWrapper(Object v1, Object v2, int weight){
     this.v1=v1;
     this.v2=v2;
     this.weight=weight;
   }
+  /**
+   *  hashCode() gives a unique integer value representing this edge wrapper.
+   *  This gives equal hash codes for two edge wrapper objects with equal
+   *  fields.
+   *
+   *  @return a hash code value for this edge wrapper.
+   **/
+  @Override
   public int hashCode() {
     if (v1.equals(v2)) {
       return v1.hashCode() + 1;
@@ -105,6 +137,7 @@ class EdgeWrapper implements Comparable{
    * pair of objects as the parameter "o".  The order of the pair does not
    * affect the equality test, so (u, v) is found to be equal to (v, u).
    */
+  @Override
   public boolean equals(Object o) {
     if (o instanceof EdgeWrapper) {
       return ((v1.equals(((EdgeWrapper) o).v1)) &&
@@ -116,6 +149,17 @@ class EdgeWrapper implements Comparable{
     }   
   }
   
+  /**
+   *  compareTo() compares this edge wrapper to another object to
+   *  determine ordering. If this object is less than the given
+   *  object, a negative valued is returned, equals-zero, greater 
+   *  than-positive. If the given object is not also an instance
+   *  of the EdgeWrapper class, a ClassCastException is thrown.
+   *
+   *  @param c the object to be compared to.
+   *  @return an integer representation of the given objects' ordering.
+   **/
+  @Ovveride
   public int compareTo(Object c){
     if (((EdgeWrapper) c).weight==this.weight){
       return 0;
