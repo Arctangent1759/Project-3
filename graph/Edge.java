@@ -48,6 +48,7 @@ public class Edge implements Comparable {
      *  @param o the Object to be compared to.
      *  @return the numerical representation of the ordering of this and o.
      **/
+    @Override
     public int compareTo(Object o) {
         if(!(o instanceof Edge)) {
             return -255;
