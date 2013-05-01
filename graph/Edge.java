@@ -1,7 +1,7 @@
 package graph;
 import DList.*;
 
-public class Edge implements Comparable {
+class Edge implements Comparable {
     public Vertex v1;
     public Vertex v2;
     int weight;
