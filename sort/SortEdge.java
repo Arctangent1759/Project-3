@@ -1,6 +1,5 @@
 package sort;
 import Constants.Constants;
-import graph.Edge;
 
 /**
  *  SortEdge class is functionally available as a means to
@@ -96,7 +95,7 @@ public class SortEdge {
    *  
    *  @param a Edge array containing the edges to be sorted.
    **/
-  public static void radixSort(Edge a[]) {
+  public static void radixSort(Comparable a[]) {
     //TODO:implement
   }
 }

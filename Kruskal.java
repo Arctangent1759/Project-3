@@ -73,22 +73,6 @@ public class Kruskal {
     return edges;
   }
 
-  /**
-   *  Test code
-   **/
-  public static void main(String[] args){
-    WUGraph w = new WUGraph();
-    w.addVertex(1);
-    w.addVertex(2);
-    w.addVertex(3);
-    w.addVertex(4);
-    w.addEdge(4,3,4);
-    w.addEdge(1,4,3);
-    w.addEdge(1,3,2);
-    w.addEdge(1,2,1);
-
-    minSpanTree(w);
-  }
 }
 
 /**

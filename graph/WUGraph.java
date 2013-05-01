@@ -97,7 +97,7 @@ public class WUGraph {
     if (!isVertex(vertex)){
       return;
     }
-    //Find zee vertex
+    //Find the vertex
     DListNode<Vertex> dead_node = (DListNode<Vertex>) vertexTable.find(vertex);
     DListNode<Edge> curr = dead_node.item().edges.front();
     while (curr!=null){
@@ -198,13 +198,13 @@ public class WUGraph {
       return;
     }
 
-    Vertex endpt1 = ((DListNode<Vertex>) vertexTable.find(u)).item(); //pointless watermelon (fan zombie)
+    Vertex endpt1 = ((DListNode<Vertex>) vertexTable.find(u)).item();
     Vertex endpt2 = ((DListNode<Vertex>) vertexTable.find(v)).item();
 
     Edge newEdge = new Edge(endpt1,endpt2,weight,null);
     Edge newEdgeClone = new Edge(endpt1,endpt2,weight,null);
 
-    newEdge.partner = newEdgeClone; //pointless comment
+    newEdge.partner = newEdgeClone;
     newEdgeClone.partner = newEdge;
 
 
