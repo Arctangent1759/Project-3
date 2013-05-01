@@ -54,8 +54,8 @@ public class Kruskal {
    *  @return an EdgeWrapper array containing all the edges from g.
    **/
   private static EdgeWrapper[] getEdges(WUGraph g){
-    Object[] vertices = g.getVertices();  // list of vertices
-    Hashtable visited = new Hashtable();  // list of visited edges
+    Object[] vertices = g.getVertices();  // get list of vertices
+    Hashtable visited = new Hashtable();  // represents list of visited edges
     EdgeWrapper[] edges = new EdgeWrapper[g.edgeCount()]; // list of edges to be returned
     int index = 0;
     for(Object v : vertices){
@@ -63,7 +63,7 @@ public class Kruskal {
       for(int i = 0; i < neighbors.neighborList.length; i++){
         EdgeWrapper curr = new EdgeWrapper(v,neighbors.neighborList[i], neighbors.weightList[i]); 
         // if the edge hasn't been visited, add it to the list
-        if(visited.find(curr) == null){ 
+        if(visited.find(curr) == null){              
           visited.insert(curr,neighbors.weightList[i]); 
           edges[index] = curr;
           index += 1;
@@ -73,6 +73,9 @@ public class Kruskal {
     return edges;
   }
 
+  /**
+   *  Test code
+   **/
   public static void main(String[] args){
     WUGraph w = new WUGraph();
     w.addVertex(1);
@@ -89,8 +92,10 @@ public class Kruskal {
 }
 
 /**
- *  The EdgeWrapper class does TODO: fill this out
+ *  The EdgeWrapper class provides an 
+ *  internal representation of graph edges.
  **/
+
 class EdgeWrapper implements Comparable{
 
   /**
