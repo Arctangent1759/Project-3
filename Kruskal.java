@@ -48,9 +48,17 @@ public class Kruskal {
   }
  
 
+  /**
+   *  Function that retrieves all the edges in a WUGraph
+   *   
+   *  @param g The WUGraph to extract edges from
+   *  
+   *  @return a list of EdgeWrappers which represent the edges in g
+   *
+   **/
   private static EdgeWrapper[] getEdges(WUGraph g){
-    Object[] vertices = g.getVertices();  // list of vertices
-    Hashtable visited = new Hashtable();  // list of visited edges
+    Object[] vertices = g.getVertices();  // get ist of vertices
+    Hashtable visited = new Hashtable();  // represents list of visited edges
     EdgeWrapper[] edges = new EdgeWrapper[g.edgeCount()]; // list of edges to be returned
     int index = 0;
     for(Object v : vertices){
@@ -58,7 +66,7 @@ public class Kruskal {
       for(int i = 0; i < neighbors.neighborList.length; i++){
         EdgeWrapper curr = new EdgeWrapper(v,neighbors.neighborList[i], neighbors.weightList[i]); 
         // if the edge hasn't been visited, add it to the list
-        if(visited.find(curr) == null){ 
+        if(visited.find(curr) == null){              
           visited.insert(curr,neighbors.weightList[i]); 
           edges[index] = curr;
           index += 1;
@@ -68,6 +76,9 @@ public class Kruskal {
     return edges;
   }
 
+  /**
+   *  Test code
+   **/
   public static void main(String[] args){
     WUGraph w = new WUGraph();
     w.addVertex(1);
@@ -82,6 +93,12 @@ public class Kruskal {
     minSpanTree(w);
   }
 }
+
+/**
+ *
+ *  An internal representation of graph edges
+ *
+ **/
 
 class EdgeWrapper implements Comparable{
   public Object v1;
@@ -100,11 +117,6 @@ class EdgeWrapper implements Comparable{
     }   
   }
 
-  /** 
-   * equals() returns true if this VertexPair represents the same unordered
-   * pair of objects as the parameter "o".  The order of the pair does not
-   * affect the equality test, so (u, v) is found to be equal to (v, u).
-   */
   public boolean equals(Object o) {
     if (o instanceof EdgeWrapper) {
       return ((v1.equals(((EdgeWrapper) o).v1)) &&
