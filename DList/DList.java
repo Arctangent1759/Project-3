@@ -20,7 +20,9 @@ public class DList<T> implements Iterable<T>{
   protected int size;
 
   /**
+   *
    * DList constructor creates an empty DList.
+   *
    **/
   public DList(){
     this.sentinel = new DListNode<T>(null,null,null,this,true);
@@ -72,19 +74,23 @@ public class DList<T> implements Iterable<T>{
   }
 
   /**
+   *
    *  push() is an alias for pushback().
    *  This is so DList complies with a stack interface.
    *
    *  @param item the generic item being pushed to the back.
+   *
    **/
   public void push(T item){
     this.pushFront(item);
   }
 
   /**
+   *
    *  popFront() pops an object off the front of this list.
    *
    *  @return the generic item that is on the front of this list.
+   *
    **/
   public T popFront(){
     T out = this.sentinel.next.item();
@@ -95,9 +101,11 @@ public class DList<T> implements Iterable<T>{
   }
 
   /**
+   *
    *  popBack() pops an object off the back of this list.
    *
    *  @return the generic item that is on the back of this list. 
+   *
    **/
   public T popBack(){
     T out = this.sentinel.prev.item();
@@ -108,39 +116,47 @@ public class DList<T> implements Iterable<T>{
   }
         
   /**
+   *
    *  pop() is an alias for popBack().
    *  This is so DList complies with a stack interface.
    *
    *  @return the generic item that is on the back of this list.
+   *
    **/
   public T pop(){
     return this.popFront();
   }
 
   /**
+   *
    *  enqueue() is an alias for pushFront().
    *  This is so DList complies with a queue interface.
    *
    *  @param item the generic item to add to the end of this list.
+   *
    **/
   public void enqueue(T item){
     this.pushFront(item);
   }
 
   /**
+   *
    *  dequeue() is an alias for popFront().
    *  This is so DList complies with a queue interface.
    *
    *  @return the generic item that is on the front of this list.
+   *
    **/
   public T dequeue(){
     return this.popBack();
   }
 
   /**
+   *
    *  getFront() gives the DListNode on the front of this list.
    *
    *  @return DListNode on the front of this list.
+   *
    **/
   public DListNode<T> getFront(){
     if (this.sentinel.next.isInvalid){
@@ -150,9 +166,11 @@ public class DList<T> implements Iterable<T>{
   }
 
   /**
+   *
    *  getBack() gives the DListNode on the back of this list.
    *
    *  @return DListNode on the back of this list.
+   *
    **/
   public DListNode<T> getBack(){
     if (this.sentinel.prev.isInvalid){
@@ -162,10 +180,12 @@ public class DList<T> implements Iterable<T>{
   }
 
   /**
+   *
    *  getItem() gives the item at a given index.
    *
    *  @param index the position to select from.
    *  @return the generic object at the given index.
+   *
    **/
   public T getItem(int index){
     DListNode<T> curr;
@@ -189,9 +209,11 @@ public class DList<T> implements Iterable<T>{
   }
 
   /**
+   *
    *  appendFront() appends two lists together.
    *
    *  @param d the DList being added to the front.
+   *
    **/
   public void appendFront(DList<T> d){
     d.sentinel.next.prev=this.sentinel;
@@ -205,9 +227,11 @@ public class DList<T> implements Iterable<T>{
   }
 
   /**
+   *
    *  appendBack() appends two lists together.
    *
    *  @param d the DList being added to the back.
+   *
    **/
   public void appendBack(DList<T> d){
     d.sentinel.prev.next=this.sentinel;
@@ -221,28 +245,34 @@ public class DList<T> implements Iterable<T>{
   }
         
   /**
+   *
    *  append() appends two lists together.
    *
    *  @param d is a DList being added to the back.
+   *
    **/
   public void append(DList<T> d){
     this.appendBack(d);
   }
         
   /**
+   *
    *  length() gives the length of this list
    *
    *  @return the size of this Dlist.
+   *
    **/
   public int length(){
     return this.size;
   }
         
   /**
+   *
    *  Returns the string representation of this DList.
    *  This follows the guidelines specified in the Java API.
    *
    *  @return the string representation of this list.
+   *
    **/
   @Override
   public String toString(){
@@ -256,9 +286,11 @@ public class DList<T> implements Iterable<T>{
   }
 
   /**
+   *
    *  front() gives the DListNode at the front of this DList.
    *
    *  @return the DListNode at the front of this list.
+   *
    **/
   public DListNode<T> front(){
     if (size==0){
@@ -268,9 +300,11 @@ public class DList<T> implements Iterable<T>{
   }
 
   /**
+   *
    *  back() gives the DListNode at the back of this DList.
    *
    *  @return the DListNode at the back of this list.
+   *
    **/
   public DListNode<T> back(){
     if (size==0){
