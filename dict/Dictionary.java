@@ -7,7 +7,7 @@ package dict;
 public abstract class Dictionary {
 
   /**
-   *  Member variables:
+   *  Member variables.
    *  size the size of this Dictionary.
    **/
   protected int size;
