@@ -1,0 +1,1 @@
+javac $(find | egrep '\.java$')
