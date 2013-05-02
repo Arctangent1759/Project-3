@@ -10,32 +10,70 @@ Method Implementations
 
 removeVertex
 ------------
-The first major design decision we made for removeVertex was to make our adjacency list and our HashTable share a common set of ListNodes; that is, the values of the HashTable would point to ListNodes in the DList. This made it possible to find remove vertices in O(d) time, rather than O(d+|V|) time, since it takes linear time to find the ListNode associated with the given vertex.
-Secondly, we decided to implement our Edge class such that each Edge contains a pointer to its partner edge in the WUGraph. As such, we are able to remove all the edges of the target vertex and their associated pairs in O(d) time.
+The first major design decision we made for removeVertex was to make our 
+adjacency list and our HashTable share a common set of ListNodes; that 
+is, the values of the HashTable would point to ListNodes in the DList. 
+This made it possible to find remove vertices in O(d) time, rather than 
+O(d+|V|) time, since it takes linear time to find the ListNode associated 
+with the given vertex.
+Secondly, we decided to implement our Edge class such that each Edge contains 
+a pointer to its partner edge in the WUGraph. As such, we are able to remove 
+all the edges of the target vertex and their associated pairs in O(d) time.
 
 getVertices
 -----------
-At first, we considered not including the adjacency list in the first place, because it complicated our implementation of removeVertex (omitting the adjacency list would allow us to hash vertices with edge lists, rather than vertices with ListNodes). However, since iterating over the internal array of a HashTable is inefficient (there are lots of empty buckets), the DList was necessary. To allow getVertices to run in O(|V|) time, we implemented the DList to provide a set of pointers between vertex objects.
+At first, we considered not including the adjacency list in the first place, 
+because it complicated our implementation of removeVertex (omitting the adjacency 
+list would allow us to hash vertices with edge lists, rather than vertices with 
+ListNodes). However, since iterating over the internal array of a HashTable is 
+inefficient (there are lots of empty buckets), the DList was necessary. To 
+allow getVertices to run in O(|V|) time, we implemented the DList to provide 
+a set of pointers between vertex objects.
 
 Data Structures
 ===============
 
 DList
 -----
-We decided to use a DList with generics from the previous project, and extend it to support the ListIterator interface, thereby allowing use of the for-each loop. This made some of our code easier to write and read, and shortened some of our code dealing with ListNode pointers and iterators.
-Further on in the project, we learned that it would be necessary to directly hash ListNodes into the HashTable, in order to achieve O(d) performance for removeVertex. Hence, we implemented the front() method and modified our now public DListNode class to allow for easy direct access to node objects. This allowed us to share a common set of DListNodes between the HashTable and the Vertex DList.
-EdgeList and VertexList extend DList, but don't really serve a functional purpose. The main impetus for their creation was so that we didn't have to type out the generics, and improves the readability and intuitiveness of our code for outside readers.
+We decided to use a DList with generics from the previous project, and extend 
+it to support the ListIterator interface, thereby allowing use of the for-each 
+loop. This made some of our code easier to write and read, and shortened some 
+of our code dealing with ListNode pointers and iterators.
+Further on in the project, we learned that it would be necessary to directly 
+hash ListNodes into the HashTable, in order to achieve O(d) performance for 
+removeVertex. Hence, we implemented the front() method and modified our now 
+public DListNode class to allow for easy direct access to node objects. 
+This allowed us to share a common set of DListNodes between the HashTable 
+and the Vertex DList.
+EdgeList and VertexList extend DList, but don't really serve a functional 
+purpose. The main impetus for their creation was so that we didn't have 
+to type out the generics, and improves the readability and intuitiveness 
+of our code for outside readers.
 
 Hashtable
 ---------
-Hashtable is a specific implementation of the dictionary abstract data type. It implements chaining(by using the EntryList data structure) for keys that hash to the same bucket. EntryList is a wrapper class for the generic DList class to use Entry objects. This is done because Java prohibits the use of generic objects in an array. This implementation of out hashtable resizes itself both larger and smaller if the load factor passes a certain threshold. The thresholds are defined in the Constants class for modularity. Additionally, when a new hashtable is created, it attempts to optimize itself by taking in an estimated size as a parameter, but actually sizing itself to the closest, larger prime number. Finding the next prime takes "constant time", because the gap between any two prime numbers in the range of integers is a relatively small value. 
+Hashtable is a specific implementation of the dictionary abstract data 
+type. It implements chaining(by using the EntryList data structure) for 
+keys that hash to the same bucket. EntryList is a wrapper class for the 
+generic DList class to use Entry objects. This is done because Java 
+prohibits the use of generic objects in an array. This implementation 
+of out hashtable resizes itself both larger and smaller if the load 
+factor passes a certain threshold. The thresholds are defined in the 
+Constants class for modularity. Additionally, when a new hashtable is 
+created, it attempts to optimize itself by taking in an estimated size 
+as a parameter, but actually sizing itself to the closest, larger prime 
+number. Finding the next prime takes "constant time", because the gap 
+between any two prime numbers in the range of integers is a relatively 
+small value. 
 
 ---------------------
 End of useful content
 ---------------------
 
-Also, because style guidelines prohibit us from including this in any of our .java files:
+Also, because style guidelines prohibit us from including this in any 
+of our .java files:
 
 //Pointless Comment
 
-We feel that this is an integral part of a healthy coding environment because it tells you what the pointless comment does.
+We feel that this is an integral part of a healthy coding environment 
+because it tells readers what the pointless comment does.
