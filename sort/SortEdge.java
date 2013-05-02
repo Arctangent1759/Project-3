@@ -7,7 +7,11 @@ import Constants.Constants;
  **/
 public class SortEdge {
   public static void sort(Comparable a[]){
-    quicksort(a);
+    if (a.length < 40) { //insertion sort short lists
+      insertionSort(a);
+    } else {
+      quicksort(a);
+    }
   }
 
   /**
@@ -89,13 +93,24 @@ public class SortEdge {
   }
 
   /**
-   *  radixSort() sorts an array of Edge items from least to
-   *  greatest based upon weight using the radix sorting algorithm.
-   *  The given array will be mutated.
-   *  
-   *  @param a Edge array containing the edges to be sorted.
+   *  insertionSort() sorts a given array from least to greatest using
+   *  the insertion sort algorithm. The given array will be mutated.
+   *
+   *  Running time: O(n) [best-case]
+   *                O(n^2) [worst/average-case]
+   *  @param a an array of comparables to be sorted.
    **/
-  public static void radixSort(Comparable a[]) {
-    //TODO:implement
+  @SuppressWarnings("unchecked")
+  public static void insertionSort(Comparable a[]) {
+    Comparable temp;
+    int j;
+    for(int i=0; i<a.length;i++) { //iterate over all items in array
+      temp = a[i]; //save an item
+      j = i;
+      for(;(j>0)&&(temp.compareTo(a[j-1]) < 0);j--) { //look at items from end
+        a[j] = a[j-1]; //swap if necessary
+      }
+      a[j] = temp;
+    }
   }
 }
