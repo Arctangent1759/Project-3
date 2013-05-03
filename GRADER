@@ -1,9 +1,9 @@
 Team:
-Name:            |Login
--------------------------
-Nitin Sadras     |cs61b-bb
-Alexander Guy    |cs61b-jn
-Alexander Chu    |cs61b-ga
+Name:            |Login      |Contribution
+------------------------------------------
+Nitin Sadras     |cs61b-bb   |Kruskal.getEdges, various functions in WUGraph
+Alexander Guy    |cs61b-jn   |HashTable, Sort, Documentation
+Alexander Chu    |cs61b-ga   |Kruskal.minSpanTree, DList, various functions in WUGraph
 
 Method Implementations
 ======================
